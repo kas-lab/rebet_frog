@@ -11,7 +11,7 @@
 #include <chrono>
 #include <ctime> 
 #include "rebet/system_attribute_value.hpp"
-#include "rebet/qr_node.h"
+#include "rebet/qr_node.hpp"
 
 #include "rebet_frog/frog_constants.hpp"
 

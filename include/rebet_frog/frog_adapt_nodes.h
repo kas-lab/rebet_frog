@@ -9,7 +9,7 @@
 #include "rebet/system_attribute_value.hpp"
 #include "rcl_interfaces/msg/parameter_value.hpp"
 #include "lifecycle_msgs/msg/transition.hpp"
-#include "rebet/adapt_node.h"
+#include "rebet/adapt_node.hpp"
 #include "rebet/rebet_utilities.hpp"
 
 #include "rebet_frog/frog_constants.hpp"
