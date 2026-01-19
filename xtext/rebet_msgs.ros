@@ -1,0 +1,175 @@
+rebet_msgs:
+  msgs:
+    Measure
+      message
+       string monitor_function
+       string json_value
+    SystemAttributeType
+      message
+       # These types correspond to the value that is set in the SystemAttributeValue message.
+       
+       
+       # Default value, which implies this is not a valid parameter.
+       
+       uint8 ATTRIBUTE_NOT_SET=0
+       
+       uint8 ATTRIBUTE_ODOM=1
+       
+       uint8 ATTRIBUTE_DIAG=2
+       
+       uint8 ATTRIBUTE_LASER=3
+       
+       uint8 ATTRIBUTE_FLOAT=4
+       
+       uint8 ATTRIBUTE_RANGE=5
+       
+       uint8 ATTRIBUTE_BATTERY=6
+    SystemAttributeValue
+      message
+       # Used to determine which of the next *_value fields are set.
+       
+       # SystemAttributeValue.PARAMETER_NOT_SET indicates that the parameter was not set
+       
+       # (if gotten) or is uninitialized.
+       
+       # Values are enumerated in `SystemAttributeType.msg`.
+       
+       "std_msgs/msg/Header" header
+       
+       # The type of this parameter, which corresponds to the appropriate field below.
+       
+       uint8 type
+       
+       # "Variant" style storage of the SystemAttribute value. Only the value corresponding
+       
+       # the type field will have valid information. This is inspired by the Parameter messages in rcl_interfaces.
+       
+       
+       # An Odometry value which represents the motion of a robot
+       
+       "nav_msgs/msg/Odometry" odom_value
+       
+       "diagnostic_msgs/msg/KeyValue" diag_value
+       
+       "sensor_msgs/msg/LaserScan" laser_value
+       
+       "std_msgs/msg/Float32" float_value
+       
+       "sensor_msgs/msg/Range" range_value
+       
+       "sensor_msgs/msg/BatteryState" battery_value
+    ObjectsIdentified
+      message
+       "builtin_interfaces/msg/Time" stamp
+       bool object_detected
+       string[] object_names
+       float32[] probabilities
+    Measures
+      message
+       "rebet_msgs/msg/Measure"[] measures
+    QRValue
+      message
+       string name
+       float64 qr_fulfilment
+       string state
+    QR
+      message
+       string qr_name
+       float32 metric
+       float32 weight
+       bool higher_is_better
+    SystemAttribute
+      message
+       # The full name of the attribute.
+       
+       string name
+       
+       # The attribute's value which can be one of several types, see
+       
+       # `SystemAttributeValue.msg` and `SystemAttributeType.msg`.
+       
+       "rebet_msgs/msg/SystemAttributeValue" value
+  srvs:
+    SetWeights
+      request
+        "rebet_msgs/msg/QR"[] qrs_to_update
+        
+        bool success
+      response
+        "rebet_msgs/msg/QR"[] qrs_to_update
+        
+        bool success
+    GetQR
+      request
+        bool at_system_level
+        
+        "rebet_msgs/msg/QR"[] qrs_in_tree
+      response
+        bool at_system_level
+        
+        "rebet_msgs/msg/QR"[] qrs_in_tree
+    GetBlackboard
+      request
+        string key_name
+        
+        string key_value
+      response
+        string key_name
+        
+        string key_value
+    SetBlackboard
+      request
+        string script_code
+        
+        bool success
+      response
+        string script_code
+        
+        bool success
+    GetContextVar
+      request
+        string variable_name
+        
+        "rcl_interfaces/msg/ParameterValue" variable_value
+      response
+        string variable_name
+        
+        "rcl_interfaces/msg/ParameterValue" variable_value
+    RegisterNewTree
+      request
+        string tree_xml
+        
+        bool success
+      response
+        string tree_xml
+        
+        bool success
+    DetectObject
+      request
+        int16 id
+        
+        int16 id
+        "rebet_msgs/msg/ObjectsIdentified"[] objects_id
+      response
+        int16 id
+        
+        int16 id
+        "rebet_msgs/msg/ObjectsIdentified"[] objects_id
+    SetAttributesInBlackboard
+      request
+        "rebet_msgs/msg/SystemAttribute"[] sys_attributes
+        
+        bool success
+      response
+        "rebet_msgs/msg/SystemAttribute"[] sys_attributes
+        
+        bool success
+    SetParameterInBlackboard
+      request
+        "rcl_interfaces/msg/Parameter"[] ros_parameters
+        
+        bool success
+      response
+        "rcl_interfaces/msg/Parameter"[] ros_parameters
+        
+        bool success

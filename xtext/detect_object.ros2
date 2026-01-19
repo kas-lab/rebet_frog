@@ -1,0 +1,29 @@
+rebet_frog:
+  artifacts:
+    yolo_as_a_service:
+      node: detect_object
+      publishers:
+        'detect_object/transition_event':
+          type: 'lifecycle_msgs/msg/TransitionEvent'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'camera/image_noisy':
+          type: 'sensor_msgs/msg/Image'
+      serviceservers:
+        'detect_object/change_state':
+          type: 'lifecycle_msgs/srv/ChangeState'
+        'detect_object/get_available_states':
+          type: 'lifecycle_msgs/srv/GetAvailableStates'
+        'detect_object/get_available_transitions':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+        'detect_object/get_state':
+          type: 'lifecycle_msgs/srv/GetState'
+        'detect_object/get_transition_graph':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+        'detect_object_srv':
+          type: 'rebet_msgs/srv/DetectObject'

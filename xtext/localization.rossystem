@@ -1,0 +1,8 @@
+localization_launch: 
+  nodes:
+    map_server:
+      from: "nav2_map_server./map_server"
+    amcl:
+      from: "nav2_amcl./amcl"
+    lifecycle_manager_localization:
+      from: "nav2_lifecycle_manager./lifecycle_manager_localization"  

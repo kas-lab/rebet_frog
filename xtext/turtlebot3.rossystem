@@ -1,0 +1,6 @@
+turtlebot3_launch: 
+  nodes:
+    turtlebot3_laserscan:
+      from: "turtlebot3_gazebo.turtlebot3_laserscan"
+    turtlebot3_diff_drive:
+      from: "turtlebot3_gazebo.turtlebot3_diff_drive"

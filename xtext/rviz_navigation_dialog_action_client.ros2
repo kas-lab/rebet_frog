@@ -1,0 +1,23 @@
+TODO:
+  artifacts:
+    TODO:
+      node: /rviz_navigation_dialog_action_client
+      publishers:
+        'waypoints':
+          type: 'visualization_msgs/msg/MarkerArray'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: transient_local
+      subscribers:
+        'clock':
+          type: 'rosgraph_msgs/msg/Clock'
+      actionclients:
+        'follow_waypoints':
+          type: 'nav2_msgs/action/FollowWaypoints'
+        'navigate_through_poses':
+          type: 'nav2_msgs/action/NavigateThroughPoses'
+        'navigate_to_pose':
+          type: 'nav2_msgs/action/NavigateToPose'

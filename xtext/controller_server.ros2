@@ -1,0 +1,100 @@
+nav2_controller:
+  artifacts:
+    controller_server:
+      node: /controller_server
+      publishers:
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'cmd_vel_nav':
+          type: 'geometry_msgs/msg/Twist'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'controller_server/transition_event':
+          type: 'lifecycle_msgs/msg/TransitionEvent'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'cost_cloud':
+          type: 'sensor_msgs/msg/PointCloud2'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'evaluation':
+          type: 'dwb_msgs/msg/LocalPlanEvaluation'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'local_plan':
+          type: 'nav_msgs/msg/Path'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'marker':
+          type: 'visualization_msgs/msg/MarkerArray'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'received_global_plan':
+          type: 'nav_msgs/msg/Path'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'transformed_global_plan':
+          type: 'nav_msgs/msg/Path'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'bond':
+          type: 'bond/msg/Status'
+        'clock':
+          type: 'rosgraph_msgs/msg/Clock'
+        'odom':
+          type: 'nav_msgs/msg/Odometry'
+        'speed_limit':
+          type: 'nav2_msgs/msg/SpeedLimit'
+      actionservers:
+        'follow_path':
+          type: 'nav2_msgs/action/FollowPath'
+      serviceservers:
+        'controller_server/change_state':
+          type: 'lifecycle_msgs/srv/ChangeState'
+        'controller_server/get_available_states':
+          type: 'lifecycle_msgs/srv/GetAvailableStates'
+        'controller_server/get_available_transitions':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+        'controller_server/get_state':
+          type: 'lifecycle_msgs/srv/GetState'
+        'controller_server/get_transition_graph':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'

@@ -1,0 +1,35 @@
+name FROGMaxSpeed;
+import "rebetmc.resolution";
+import "frog.context";
+rule DECREASE_TO_MED {
+guard {
+ 	context(nearest_object < 0.10 OR power_draw > 40.0)
+ 	features(selected(rebetmc.HI_SPEED)) 
+ 	}
+action { select_variant(rebetmc.MED_SPEED)}
+effect {}
+};
+rule DECREASE_TO_LOW {
+guard {
+ 	context(nearest_object < 0.10 OR power_draw > 40.0)
+ 	features(selected(rebetmc.MED_SPEED)) 
+ 	}
+action { select_variant(rebetmc.LOW_SPEED)}
+effect {}
+};
+rule INCREASE_TO_MED {
+guard {
+ 	context(nearest_object > 0.15 OR power_draw <= 40.0 OR current_velocity < 0.40)
+ 	features(selected(rebetmc.LOW_SPEED)) 
+ 	}
+action { select_variant(rebetmc.MED_SPEED)}
+effect {}
+};
+rule INCREASE_TO_MAX {
+guard {
+ 	context(nearest_object > 0.15 OR power_draw <= 40.0 OR current_velocity < 0.40)
+ 	features(selected(rebetmc.MED_SPEED)) 
+ 	}
+action { select_variant(rebetmc.HI_SPEED)}
+effect {}
+};

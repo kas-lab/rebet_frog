@@ -1,0 +1,79 @@
+rebet_frog:
+  artifacts:
+    camera_plugin:
+      node: /camera_controller
+      publishers:
+        'corner_camera/camera_info':
+          type: 'sensor_msgs/msg/CameraInfo'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'corner_camera/image_raw':
+          type: 'sensor_msgs/msg/Image'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'corner_camera/image_raw/compressed':
+          type: 'sensor_msgs/msg/CompressedImage'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'corner_camera/image_raw/compressedDepth':
+          type: 'sensor_msgs/msg/CompressedImage'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'corner_camera/image_raw/theora':
+          type: 'theora_image_transport/msg/Packet'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'clock':
+          type: 'rosgraph_msgs/msg/Clock'
+      serviceservers:
+        'set_camera_info':
+          type: 'sensor_msgs/srv/SetCameraInfo'
+      parameters:
+        'corner_camera.image_raw.enable_pub_plugins':
+          type: Array[String]
+          value: ['image_transport/compressedDepth', 'image_transport/compressed', 'image_transport/raw', 'image_transport/theora']
+        'corner_camera.image_raw.format':
+          type: String
+          value: "jpeg"
+        'corner_camera.image_raw.jpeg_quality':
+          type: Integer
+          value: 95
+        'corner_camera.image_raw.png_level':
+          type: Integer
+          value: 3
+        'corner_camera.image_raw.tiff.res_unit':
+          type: String
+          value: "inch"
+        'corner_camera.image_raw.tiff.xdpi':
+          type: Integer
+          value: -1
+        'corner_camera.image_raw.tiff.ydpi':
+          type: Integer
+          value: -1
+        'update_rate':
+          type: Double
+          value: 30.000000300000004
+        'use_sim_time':
+          type: Boolean
+          value: true

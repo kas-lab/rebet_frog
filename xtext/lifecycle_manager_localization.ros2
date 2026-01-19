@@ -1,0 +1,41 @@
+nav2_lifecycle_manager:
+  artifacts:
+    lifecycle_manager_localization:
+      node: /lifecycle_manager_localization
+      publishers:
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'bond':
+          type: 'bond/msg/Status'
+        'bond':
+          type: 'bond/msg/Status'
+        'clock':
+          type: 'rosgraph_msgs/msg/Clock'
+      serviceservers:
+        'lifecycle_manager_localization/is_active':
+          type: 'std_srvs/srv/Trigger'
+        'lifecycle_manager_localization/manage_nodes':
+          type: 'nav2_msgs/srv/ManageLifecycleNodes'

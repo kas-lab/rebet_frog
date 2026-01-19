@@ -1,0 +1,389 @@
+nav2_msgs:
+  msgs:
+    CostmapMetaData
+      message
+       # This hold basic information about the characteristics of the Costmap
+       
+       # The time at which the static map was loaded
+       "builtin_interfaces/msg/Time" map_load_time
+       
+       # The time of the last update to costmap
+       "builtin_interfaces/msg/Time" update_time
+       
+       # The corresponding layer name
+       string layer
+       
+       # The map resolution []
+       float32 resolution
+       
+       # Number of cells in the horizontal direction
+       uint32 size_x
+       
+       # Number of cells in the vertical direction
+       uint32 size_y
+       
+       # The origin of the costmap [m, m, rad].
+       # This is the real-world pose of the cell (0,0) in the map.
+       "geometry_msgs/msg/Pose" origin
+    RouteNode
+      message
+       uint16 nodeid
+       "geometry_msgs/msg/Point" position
+    RouteEdge
+      message
+       uint16 edgeid
+       "geometry_msgs/msg/Point" start
+       "geometry_msgs/msg/Point" end
+    Costmap
+      message
+       # This represents a 2-D grid map, in which each cell has an associated cost
+       
+       "std_msgs/msg/Header" header
+       
+       # MetaData for the map
+       "nav2_msgs/msg/CostmapMetaData" metadata
+       
+       # The cost data, in row-major order, starting with (0,0).
+       uint8[] data
+    CostmapFilterInfo
+      message
+       "std_msgs/msg/Header" header
+       # Type of plugin used (keepout filter, speed limit in "m/msg/s," speed limit in percent, etc...)
+       # 0: "keepout/msg/lanes" filter
+       # 1: speed limit filter in % of maximum speed
+       # 2: speed limit filter in absolute values "(m/msg/s)"
+       uint8 type
+       # Name of filter mask topic
+       string filter_mask_topic
+       # Multiplier base offset and multiplier coefficient for conversion of OccGrid.
+       # Used to convert OccupancyGrid data values to filter space values.
+       # data -> into some other number space:
+       # space=data °*- 240314_3832_DSC8713_highres.jpg aaa acsos_ws action_view.jpg albert_ws ament_flake8.ini anothereclipseresolutionmodel ardupilot ardupilot_gazebo away_mirte basicnavigation.py berry_ws bounding_test.py btcpp_error_ws btdiagram.svg btros2PR build camera_ws Carlos:.md clean_ws cokepath complextest.mydsl core.2377 core.2438 core.2439 core.2670 demo_ws Desktop dev_containers_ros1 docker-compose.yml docker_infrastructure Documents Downloads dummy_ros_ws dummy_ws eclipse eclipseDockerFile eclipse-mirror eclipseresolutionmodel eclipse-workspace emptyworldagain.sdf everything_build.xml explore.py fmlearning frames_2025-02-07_13.14.17.gv frames_2025-02-07_13.14.17.pdf gazebo_ros_battery generate_messages_model_helper.sh goalpositions groot Groot2 gzmath_ws hospital_world_ws HyperFlex hyperflex_plugins IsaacGym_Preview_4_Package.tar.gz Jagex kaslab_robocup_ws KRR_simulation krr_ws libssl1.1_1.1.1f-1ubuntu2_amd64.deb lifecycle_impact_ws log mar_ws mavros_msgs mirte_fastddsthing mirte_fortress mirte_remote mirte_ws modal mros_reasoner_ws Music nav2_msgs.ros nav2_tb3_fails.log navigation new_control new_eclipse_version_second_ws new_eclipse_version_ws new_eclipse_version_ws_empty new_eclipse_version_ws_who newtest.mydsl newtest.rossystem new_ws nfbt res nfbt res.zip notes nothing.xml notruntime-EclipseApplication nottalker.ros2 old_control old_mirte_gz_ws old_rebetmc.resolution openjdk-14_linux-x64_bin.tar.gz org.xtext.example.rebetvar other.sh panda_ign_ws papertree.xml paths_again Pictures plugins privatekey Public rainbow rebet_demo_version_delafter rebetinternal.tactics rebetmc_eclipse_projs rebetmc_ws rebet_prism_ws rebet_ws rebet_ws (copy) rebet_ws (copy).zip rebet_ws_not_using_git rebet_ws_working referenceTalker remove_ws roomthing.py ros2cpp_ws ros2_java_ws RosCommonObjects rosmap RosModelsCatalog RosTooling ros-tooling-eclipse-ws ros-tooling-eclipse-ws-dev rostooling_PR roswire roswire_fork RRA runtime-EclipseApplication runtimemodels samXLruntime-EclipseApplication SAMXL_TR school smallbox.world snap spareeclipseresolutionmodel splcfeaturemodels splcruntime-EclipseApplication suave suave_ws summerschool_archival tacticswithboolean temmm temp Templates test2.sh testbedzero_ws test.mydsl test.sdf test.sh test.tactic tiago_migration.code-workspace tiago_migration_ws tiago_public_ws tiago_robot trydockerblade tudelft_hackathon_ws tugbote.sdf tugbot.sdf turtlebot3_ws turtlebot4_ws typedbb typedbtaktix uhh uh.sh understandingpaper UPISAS UPISAS-docker-images UPISAS-joel Videos vnc_ubuntu vscode-cpptools workspace ws_moveit xtext-main xtext-tutorial-workspace yetanotherruntime-EclipseApplication yetyetanotherruntime-EclipseApplication yetyetyetanotherruntime-EclipseApplication multiplier + base
+       float32 base
+       float32 multiplier
+    BehaviorTreeLog
+      message
+       "builtin_interfaces/msg/Time" timestamp # ROS time that this log message was sent.
+       "nav2_msgs/msg/BehaviorTreeStatusChange"[] event_log
+    VoxelGrid
+      message
+       "std_msgs/msg/Header" header
+       uint32[] data
+       "geometry_msgs/msg/Point32" origin
+       "geometry_msgs/msg/Vector3" resolutions
+       uint32 size_x
+       uint32 size_y
+       uint32 size_z
+    ParticleCloud
+      message
+       # This represents a particle cloud containing particle poses and weights
+       
+       "std_msgs/msg/Header" header
+       
+       # Array of particles in the cloud
+       "nav2_msgs/msg/Particle"[] particles
+    BehaviorTreeStatusChange
+      message
+       "builtin_interfaces/msg/Time" timestamp # internal behavior tree event timestamp. Typically this is wall clock time
+       string node_name
+       string previous_status # IDLE, RUNNING, SUCCESS or FAILURE
+       string current_status # IDLE, RUNNING, SUCCESS or FAILURE
+    SpeedLimit
+      message
+       "std_msgs/msg/Header" header
+       # Setting speed limit in percentage if true or in absolute values in false case
+       bool percentage
+       # Maximum allowed speed (in percent of maximum robot speed or in "m/msg/s" depending
+       # on "percentage" value). When no-limit it is set to 0.0
+       float64 speed_limit
+    Route
+      message
+       "std_msgs/msg/Header" header
+       float32 route_cost
+       "nav2_msgs/msg/RouteNode"[] nodes # ordered set of nodes of the route
+       "nav2_msgs/msg/RouteEdge"[] edges # ordered set of edges that connect nodes
+    EdgeCost
+      message
+       # Edge cost to use with "nav2_msgs/msg/srv/msg/DynamicEdges" to adjust route edge costs
+       uint16 edgeid
+       float32 cost
+    Particle
+      message
+       # This represents an individual particle with weight produced by a particle filter
+       
+       "geometry_msgs/msg/Pose" pose
+       
+       float64 weight
+    CollisionMonitorState
+      message
+       # Action type for robot in Collision Monitor
+       uint8 DO_NOTHING=0 # No action
+       uint8 STOP=1 # Stop the robot
+       uint8 SLOWDOWN=2 # Slowdown in percentage from current operating speed
+       uint8 APPROACH=3 # Keep constant time interval before collision
+       uint8 action_type
+       
+       # Name of triggered polygon
+       string polygon_name
+  srvs:
+    SetInitialPose
+      request
+        "geometry_msgs/msg/PoseWithCovarianceStamped" pose
+      response
+        "geometry_msgs/msg/PoseWithCovarianceStamped" pose
+    ClearEntireCostmap
+      request   
+        "std_msgs/msg/Empty" "request"
+      response
+        "std_msgs/msg/Empty" "response"
+    DynamicEdges
+      request
+        uint16[] closed_edges
+        uint16[] opened_edges
+        "nav2_msgs/msg/EdgeCost"[] adjust_edges
+        
+        bool success
+      response
+        uint16[] closed_edges
+        uint16[] opened_edges
+        "nav2_msgs/msg/EdgeCost"[] adjust_edges
+        
+        bool success
+    SaveMap
+      request
+        string map_topic
+        string map_url
+        string image_format
+        string map_mode
+        float32 free_thresh
+        float32 occupied_thresh
+        
+        bool result
+      response
+        string map_topic
+        string map_url
+        string image_format
+        string map_mode
+        float32 free_thresh
+        float32 occupied_thresh
+        
+        bool result
+    SetRouteGraph
+      request
+        string graph_filepath
+        
+        bool success
+      response
+        string graph_filepath
+        
+        bool success
+    ClearCostmapAroundRobot
+      request
+        
+        float32 reset_distance
+        
+        "std_msgs/msg/Empty" "response"
+      response
+        
+        float32 reset_distance
+        
+        "std_msgs/msg/Empty" "response"
+    ClearCostmapExceptRegion
+      request
+        
+        float32 reset_distance
+        
+        "std_msgs/msg/Empty" "response"
+      response
+        
+        float32 reset_distance
+        
+        "std_msgs/msg/Empty" "response"
+    ManageLifecycleNodes
+      request
+        uint8 STARTUP=0
+        uint8 PAUSE=1
+        uint8 RESUME=2
+        uint8 RESET=3
+        uint8 SHUTDOWN=4
+        
+        uint8 command
+        
+        bool success
+      response
+        uint8 STARTUP=0
+        uint8 PAUSE=1
+        uint8 RESUME=2
+        uint8 RESET=3
+        uint8 SHUTDOWN=4
+        
+        uint8 command
+        
+        bool success
+    GetCostmap
+      request
+        
+        "nav2_msgs/msg/CostmapMetaData" specs
+        
+        "nav2_msgs/msg/Costmap" map
+      response
+        
+        "nav2_msgs/msg/CostmapMetaData" specs
+        
+        "nav2_msgs/msg/Costmap" map
+    LoadMap
+      request
+        string map_url
+        
+        uint8 RESULT_SUCCESS=0
+        uint8 RESULT_MAP_DOES_NOT_EXIST=1
+        uint8 RESULT_INVALID_MAP_DATA=2
+        uint8 RESULT_INVALID_MAP_METADATA=3
+        uint8 RESULT_UNDEFINED_FAILURE=255
+        
+        "nav_msgs/msg/OccupancyGrid" map
+        uint8 result
+      response
+        string map_url
+        
+        uint8 RESULT_SUCCESS=0
+        uint8 RESULT_MAP_DOES_NOT_EXIST=1
+        uint8 RESULT_INVALID_MAP_DATA=2
+        uint8 RESULT_INVALID_MAP_METADATA=3
+        uint8 RESULT_UNDEFINED_FAILURE=255
+        
+        "nav_msgs/msg/OccupancyGrid" map
+        uint8 result
+    IsPathValid
+      request
+        
+        "nav_msgs/msg/Path" path
+        
+        bool is_valid
+        int32[] invalid_pose_indices
+      response
+        
+        "nav_msgs/msg/Path" path
+        
+        bool is_valid
+        int32[] invalid_pose_indices
+  actions:
+    FollowPath
+      goal
+        'nav_msgs/msg/Path'[] path
+        string controller_id
+        string goal_checker_id
+      result
+        'std_msgs/msg/Empty'[] result
+      feedback
+        float32 distance_to_goal
+        float32 speed
+    NavigateThroughPoses
+      goal
+        'geometry_msgs/msg/PoseStamped'[] poses
+        string behavior_tree
+      result
+        'std_msgs/msg/Empty'[] result
+      feedback
+        'geometry_msgs/msg/PoseStamped'[] current_pose
+        'builtin_interfaces/msg/Duration'[] navigation_time
+        'builtin_interfaces/msg/Duration'[] estimated_time_remaining
+        int16 number_of_recoveries
+        float32 distance_remaining
+        int16 number_of_poses_remaining
+    ComputePathThroughPoses
+      goal
+        'geometry_msgs/msg/PoseStamped'[] goals
+        'geometry_msgs/msg/PoseStamped'[] start
+        string planner_id
+        bool use_start
+      result
+        'nav_msgs/msg/Path'[] path
+        'builtin_interfaces/msg/Duration'[] planning_time
+      feedback
+    AssistedTeleop
+      goal
+        'builtin_interfaces/msg/Duration'[] time_allowance
+      result
+        'builtin_interfaces/msg/Duration'[] total_elapsed_time
+      feedback
+        'builtin_interfaces/msg/Duration'[] current_teleop_duration
+    Spin
+      goal
+        float32 target_yaw
+        'builtin_interfaces/msg/Duration'[] time_allowance
+      result
+        'builtin_interfaces/msg/Duration'[] total_elapsed_time
+      feedback
+        float32 angular_distance_traveled
+    ComputePathToPose
+      goal
+        'geometry_msgs/msg/PoseStamped'[] goal
+        'geometry_msgs/msg/PoseStamped'[] start
+        string planner_id
+        bool use_start
+      result
+        'nav_msgs/msg/Path'[] path
+        'builtin_interfaces/msg/Duration'[] planning_time
+      feedback
+    DummyBehavior
+      goal
+        'std_msgs/msg/String'[] command
+      result
+        'builtin_interfaces/msg/Duration'[] total_elapsed_time
+      feedback
+    SmoothPath
+      goal
+        'nav_msgs/msg/Path'[] path
+        string smoother_id
+        'builtin_interfaces/msg/Duration'[] max_smoothing_duration
+        bool check_for_collisions
+      result
+        'nav_msgs/msg/Path'[] path
+        'builtin_interfaces/msg/Duration'[] smoothing_duration
+        bool was_completed
+      feedback
+    DriveOnHeading
+      goal
+        'geometry_msgs/msg/Point'[] target
+        float32 speed
+        'builtin_interfaces/msg/Duration'[] time_allowance
+      result
+        'builtin_interfaces/msg/Duration'[] total_elapsed_time
+      feedback
+        float32 distance_traveled
+    NavigateToPose
+      goal
+        'geometry_msgs/msg/PoseStamped'[] pose
+        string behavior_tree
+      result
+        'std_msgs/msg/Empty'[] result
+      feedback
+        'geometry_msgs/msg/PoseStamped'[] current_pose
+        'builtin_interfaces/msg/Duration'[] navigation_time
+        'builtin_interfaces/msg/Duration'[] estimated_time_remaining
+        int16 number_of_recoveries
+        float32 distance_remaining
+    BackUp
+      goal
+        'geometry_msgs/msg/Point'[] target
+        float32 speed
+        'builtin_interfaces/msg/Duration'[] time_allowance
+      result
+        'builtin_interfaces/msg/Duration'[] total_elapsed_time
+      feedback
+        float32 distance_traveled
+    Wait
+      goal
+        'builtin_interfaces/msg/Duration'[] time
+      result
+        'builtin_interfaces/msg/Duration'[] total_elapsed_time
+      feedback
+        'builtin_interfaces/msg/Duration'[] time_left
+    FollowWaypoints
+      goal
+        'geometry_msgs/msg/PoseStamped'[] poses
+      result
+        int32[] missed_waypoints
+      feedback
+        uint32 current_waypoint

@@ -1,0 +1,8 @@
+rosgraph_msgs:
+  msgs:
+    Clock
+      message
+       # This message communicates the current time.
+       #
+       # For more information, see "https:/msg//msg/design.ros2.org/msg/articles/msg/clock_and_time.html."
+       "builtin_interfaces/msg/Time" clock

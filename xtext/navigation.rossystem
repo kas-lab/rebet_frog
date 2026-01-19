@@ -1,0 +1,27 @@
+navigation_launch: 
+  processes:
+    bt_navigator:
+      nodes: [ bt_navigator, bt_navigator_navigate_through_poses_rclcpp_node, bt_navigator_navigate_to_pose_rclcpp_node]
+  nodes:
+    controller_server:
+      from: "nav2_controller./controller_server"
+    smoother_server:
+      from: "nav2_smoother./smoother_server"
+    planner_server:
+      from: "nav2_planner./planner_server"
+    behavior_server:
+      from: "nav2_behaviors./behavior_server"
+    bt_navigator:
+      from: "nav2_bt_navigator./bt_navigator"
+    bt_navigator_navigate_to_pose_rclcpp_node:
+      from: "nav2_bt_navigator./bt_navigator_navigate_to_pose_rclcpp_node"
+      parent_node: "nav2_bt_navigator./bt_navigator"
+    bt_navigator_navigate_through_poses_rclcpp_node:
+      from: "nav2_bt_navigator./bt_navigator_navigate_through_poses_rclcpp_node"
+      parent_node: "nav2_bt_navigator./bt_navigator"
+    waypoint_follower:
+      from: "nav2_waypoint_follower./waypoint_follower"
+    "/velocity_smoother":
+      from: "nav2_velocity_smoother./velocity_smoother"
+    lifecycle_manager_navigation: # what should this be called? executable or node name??
+      from: "nav2_lifecycle_manager./lifecycle_manager_navigation" 

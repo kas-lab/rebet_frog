@@ -131,6 +131,7 @@ install(DIRECTORY
   trees
   models
   worlds
+  xtext
   DESTINATION share/${PROJECT_NAME}/
 )
 

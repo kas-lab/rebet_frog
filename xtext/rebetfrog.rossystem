@@ -1,0 +1,6 @@
+rebet_frog:
+  subSystems:
+    localization_launch
+    navigation_launch
+    turtlebot3_launch
+    yolo_launch

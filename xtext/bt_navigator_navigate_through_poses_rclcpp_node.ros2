@@ -1,0 +1,27 @@
+nav2_bt_navigator:
+  artifacts:
+    bt_navigator_navigate_through_poses_rclcpp_node:
+      node: /bt_navigator_navigate_through_poses_rclcpp_node
+      publishers:
+        'behavior_tree_log':
+          type: 'nav2_msgs/msg/BehaviorTreeLog'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'clock':
+          type: 'rosgraph_msgs/msg/Clock'
+      actionclients:
+        'backup':
+          type: 'nav2_msgs/action/BackUp'
+        'compute_path_through_poses':
+          type: 'nav2_msgs/action/ComputePathThroughPoses'
+        'follow_path':
+          type: 'nav2_msgs/action/FollowPath'
+        'spin':
+          type: 'nav2_msgs/action/Spin'
+        'wait':
+          type: 'nav2_msgs/action/Wait'

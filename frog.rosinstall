@@ -23,3 +23,15 @@ repositories:
     type: git
     url: https://github.com/EGAlberts/ReBeT.git
     version: mc
+  adapt_x:
+    type: git
+    url: git@github.com:kas-lab/adapt_x.git
+    version: main
+  ros_typedb:
+    type: git
+    url: https://github.com/kas-lab/ros_typedb.git
+    version: main
+  typedb_tactics:
+    type: git
+    url: git@github.com:kas-lab/typedb_tactics.git
+    version: elvin_mess

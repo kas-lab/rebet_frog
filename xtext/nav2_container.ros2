@@ -1,0 +1,4 @@
+rclcpp_components:
+  artifacts:
+    component_container_isolated:
+      node: /nav2_container

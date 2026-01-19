@@ -1,0 +1,68 @@
+nav2_waypoint_follower:
+  artifacts:
+    waypoint_follower:
+      node: /waypoint_follower
+      publishers:
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'waypoint_follower/transition_event':
+          type: 'lifecycle_msgs/msg/TransitionEvent'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'bond':
+          type: 'bond/msg/Status'
+        'clock':
+          type: 'rosgraph_msgs/msg/Clock'
+      actionservers:
+        'follow_waypoints':
+          type: 'nav2_msgs/action/FollowWaypoints'
+      actionclients:
+        'navigate_to_pose':
+          type: 'nav2_msgs/action/NavigateToPose'
+      serviceservers:
+        'waypoint_follower/change_state':
+          type: 'lifecycle_msgs/srv/ChangeState'
+        'waypoint_follower/get_available_states':
+          type: 'lifecycle_msgs/srv/GetAvailableStates'
+        'waypoint_follower/get_available_transitions':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+        'waypoint_follower/get_state':
+          type: 'lifecycle_msgs/srv/GetState'
+        'waypoint_follower/get_transition_graph':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+      parameters:
+        '/bond_disable_heartbeat_timeout':
+          type: Boolean
+          value: true
+        'loop_rate':
+          type: Integer
+          value: 20
+        'stop_on_failure':
+          type: Boolean
+          value: false
+        'use_sim_time':
+          type: Boolean
+          value: true
+        'wait_at_waypoint.enabled':
+          type: Boolean
+          value: true
+        'wait_at_waypoint.plugin':
+          type: String
+          value: "nav2_waypoint_follower::WaitAtWaypoint"
+        'wait_at_waypoint.waypoint_pause_duration':
+          type: Integer
+          value: 200
+        'waypoint_task_executor_plugin':
+          type: String
+          value: "wait_at_waypoint"

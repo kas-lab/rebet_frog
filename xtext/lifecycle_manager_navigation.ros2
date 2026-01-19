@@ -1,0 +1,119 @@
+nav2_lifecycle_manager:
+  artifacts:
+    lifecycle_manager_navigation:
+      node: /lifecycle_manager_navigation
+      publishers:
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'bond':
+          type: 'bond/msg/Status'
+        'bond':
+          type: 'bond/msg/Status'
+        'bond':
+          type: 'bond/msg/Status'
+        'bond':
+          type: 'bond/msg/Status'
+        'bond':
+          type: 'bond/msg/Status'
+        'bond':
+          type: 'bond/msg/Status'
+        'bond':
+          type: 'bond/msg/Status'
+        'clock':
+          type: 'rosgraph_msgs/msg/Clock'
+      serviceservers:
+        'lifecycle_manager_navigation/is_active':
+          type: 'std_srvs/srv/Trigger'
+        'lifecycle_manager_navigation/manage_nodes':
+          type: 'nav2_msgs/srv/ManageLifecycleNodes'
+      parameters:
+        '/bond_disable_heartbeat_timeout':
+          type: Boolean
+          value: false
+        'attempt_respawn_reconnection':
+          type: Boolean
+          value: true
+        'autostart':
+          type: Boolean
+          value: true
+        'bond_respawn_max_duration':
+          type: Double
+          value: 10.0
+        'bond_timeout':
+          type: Double
+          value: 4.0
+        'diagnostic_updater.period':
+          type: Double
+          value: 1.0
+        'diagnostic_updater.use_fqn':
+          type: Boolean
+          value: false
+        'node_names':
+          type: Array[String]
+          value: ['controller_server', 'smoother_server', 'planner_server', 'behavior_server', 'bt_navigator', 'waypoint_follower', 'velocity_smoother']
+        'use_sim_time':
+          type: Boolean
+          value: true

@@ -1,0 +1,4 @@
+yolo_launch: 
+  nodes:
+    detect_object:
+      from: "rebet_frog.detect_object"

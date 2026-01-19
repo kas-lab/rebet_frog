@@ -1,0 +1,33 @@
+import "rebetfrog.rossystem";
+ContextVariable nearest_object
+{
+	source: origin: publisher: turtlebot3_laserscan.scan
+	cache? false
+	function_name "get_nearest_laser_scan_ratio"
+}
+ContextVariable too_close
+{
+	source: origin: publisher: turtlebot3_laserscan.scan
+	cache? false
+	function_name "is_too_close"
+}
+ContextVariable current_velocity
+{
+	source: origin: publisher: turtlebot3_diff_drive.odom
+	cache? false
+	function_name "calc_linear_velocity"
+}
+ContextVariable power_draw
+{
+	source: origin: publisher: turtlebot3_diff_drive.odom
+	cache? true
+	cache length 1s
+	function_name "MovementPowerDraw"
+}
+ContextVariable power_budget
+{
+	source: origin: service: detect_object.detect_object_srv request_kwargs ""
+	cache? false
+	proxy true
+	function_name "PowerBudget"
+}

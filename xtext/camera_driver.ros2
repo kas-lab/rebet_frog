@@ -1,0 +1,51 @@
+turtlebot3_gazebo:
+  artifacts:
+    turtlebot_camera:
+      node: /camera_driver
+      publishers:
+        'camera/camera_info':
+          type: 'sensor_msgs/msg/CameraInfo'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'camera/image_raw':
+          type: 'sensor_msgs/msg/Image'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'camera/image_raw/compressed':
+          type: 'sensor_msgs/msg/CompressedImage'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'camera/image_raw/compressedDepth':
+          type: 'sensor_msgs/msg/CompressedImage'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'camera/image_raw/theora':
+          type: 'theora_image_transport/msg/Packet'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'clock':
+          type: 'rosgraph_msgs/msg/Clock'
+      serviceservers:
+        'set_camera_info':
+          type: 'sensor_msgs/srv/SetCameraInfo'

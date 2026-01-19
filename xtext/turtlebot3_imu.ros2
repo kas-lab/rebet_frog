@@ -1,0 +1,20 @@
+turtlebot3_gazebo:
+  artifacts:
+    turtlebot3_imu:
+      node: /turtlebot3_imu
+      publishers:
+        'imu':
+          type: 'sensor_msgs/msg/Imu'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'clock':
+          type: 'rosgraph_msgs/msg/Clock'
+      parameters:
+        'use_sim_time':
+          type: Boolean
+          value: true

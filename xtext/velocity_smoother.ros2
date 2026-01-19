@@ -1,0 +1,47 @@
+nav2_velocity_smoother:
+  artifacts:
+    velocity_smoother:
+      node: /velocity_smoother
+      publishers:
+        'bond':
+          type: 'bond/msg/Status'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'cmd_vel':
+          type: 'geometry_msgs/msg/Twist'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'velocity_smoother/transition_event':
+          type: 'lifecycle_msgs/msg/TransitionEvent'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'bond':
+          type: 'bond/msg/Status'
+        'clock':
+          type: 'rosgraph_msgs/msg/Clock'
+        'cmd_vel_nav':
+          type: 'geometry_msgs/msg/Twist'
+      serviceservers:
+        'velocity_smoother/change_state':
+          type: 'lifecycle_msgs/srv/ChangeState'
+        'velocity_smoother/get_available_states':
+          type: 'lifecycle_msgs/srv/GetAvailableStates'
+        'velocity_smoother/get_available_transitions':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+        'velocity_smoother/get_state':
+          type: 'lifecycle_msgs/srv/GetState'
+        'velocity_smoother/get_transition_graph':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
