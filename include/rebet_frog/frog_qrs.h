@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <chrono>
 #include <ctime> 
-#include "rebet/system_attribute_value.hpp"
 #include "rebet/qr_node.hpp"
 
 #include "rebet_frog/frog_constants.hpp"
@@ -333,7 +332,7 @@ class MovementPowerQR : public TaskLevelQR
       PortsList base_ports = TaskLevelQR::providedPorts();
 
       PortsList child_ports = { 
-              InputPort<rebet::SystemAttributeValue>(IN_ODOM,"odometry message wrapped in a systemattributevalue instance"),
+              InputPort<nav_msgs::msg::Odometry>(IN_ODOM,"odometry message"),
               };
 
       child_ports.merge(base_ports);
@@ -343,11 +342,11 @@ class MovementPowerQR : public TaskLevelQR
 
     void process_movement_progress()
     {
-      auto res = getInput(IN_ODOM,_odom_attribute); 
+      nav_msgs::msg::Odometry odom_msg;
+      auto res = getInput(IN_ODOM,odom_msg); 
 
       if(res)
       {
-        nav_msgs::msg::Odometry odom_msg = _odom_attribute.get<rebet::SystemAttributeType::ATTRIBUTE_ODOM>();
         float linear_speed = hypot(fabs(odom_msg.twist.twist.linear.x), fabs(odom_msg.twist.twist.linear.y));
 
 
@@ -406,9 +405,7 @@ class MovementPowerQR : public TaskLevelQR
 
     }
 
-    private:
-      rebet::SystemAttributeValue _odom_attribute;
-   
+    private:   
       int _odom_last_timestamp_sec;
 
       float _power_consumed_moving;      
@@ -681,7 +678,7 @@ class MovementEfficiencyQR : public TaskLevelQR
       PortsList base_ports = TaskLevelQR::providedPorts();
 
       PortsList child_ports = { 
-              InputPort<rebet::SystemAttributeValue>(IN_ODOM,"odometry message wrapped in a systemattributevalue instance"),
+              InputPort<nav_msgs::msg::Odometry>(IN_ODOM,"odometry message"),
               };
 
       child_ports.merge(base_ports);
@@ -691,12 +688,9 @@ class MovementEfficiencyQR : public TaskLevelQR
 	
     virtual void calculate_measure() override
     {
-      auto res = getInput(IN_ODOM,_odom_attribute); 
+      auto res = getInput(IN_ODOM,_odom_msg); 
       if(res)
       {
-        _odom_msg = _odom_attribute.get<rebet::SystemAttributeType::ATTRIBUTE_ODOM>();
-
-
         if(_odom_msg.header.stamp != _odom_last_timestamp)
         {
           _linear_speed = hypot(fabs(_odom_msg.twist.twist.linear.x), fabs(_odom_msg.twist.twist.linear.y));
@@ -727,7 +721,6 @@ class MovementEfficiencyQR : public TaskLevelQR
 
     }
   private:
-      rebet::SystemAttributeValue _odom_attribute;
       int _window_length;
       int _window_start;
       int _last_odom;
@@ -775,7 +768,7 @@ class SafetyQR : public TaskLevelQR
       PortsList base_ports = TaskLevelQR::providedPorts();
 
       PortsList child_ports = { 
-              InputPort<rebet::SystemAttributeValue>(IN_LASER,"laser_scan message wrapped in a systemattributevalue instance"),
+              InputPort<sensor_msgs::msg::LaserScan>(IN_LASER,"laser_scan message"),
               };
 
       child_ports.merge(base_ports);
@@ -785,11 +778,10 @@ class SafetyQR : public TaskLevelQR
 	
     virtual void calculate_measure() override
     {
-      auto res = getInput(IN_LASER,_laser_attribute); 
+      auto res = getInput(IN_LASER,_laser_msg); 
 
       if(res)
       {
-        _laser_msg = _laser_attribute.get<rebet::SystemAttributeType::ATTRIBUTE_LASER>();
         if(_laser_msg.header.stamp != _obj_last_timestamp)
         {
           _obj_last_timestamp = _laser_msg.header.stamp; 
@@ -836,7 +828,6 @@ class SafetyQR : public TaskLevelQR
 
     }
   private:
-      rebet::SystemAttributeValue _laser_attribute;
       int _window_length;
       int _window_start;
       float _fitted_nearest;

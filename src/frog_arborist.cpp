@@ -10,7 +10,7 @@
 #include "std_msgs/msg/string.hpp"
 #include "behaviortree_cpp/json_export.h"
 #include "nav_msgs/msg/odometry.hpp"
-#include <nlohmann/json.hpp>
+#include "behaviortree_cpp/contrib/json.hpp"
 
 
 
@@ -50,6 +50,7 @@ public:
 
     factory.registerNodeType<AdaptMaxSpeedExternal>("AdaptMaxSpeed");
     factory.registerNodeType<AdaptMaxSpeedInternal>("AdaptMaxSpeedOff");
+    factory.registerNodeType<AdaptOnConditionAny>("AdaptOnConditionAny");
 
     factory.registerNodeType<FromExploreToIdentify>("FromExploreToIdentify");
 

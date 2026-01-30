@@ -1,4 +1,4 @@
-  #pragma once
+#pragma once
 
 #include "rclcpp/rclcpp.hpp"
 
@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <chrono>
 #include <ctime> 
-#include "rebet/system_attribute_value.hpp"
 #include "rcl_interfaces/msg/parameter_value.hpp"
 #include "lifecycle_msgs/msg/transition.hpp"
 #include "rebet/adapt_node.hpp"
@@ -163,7 +162,7 @@ class AdaptPictureRateInternal: public AdaptOnConditionOnStart<int>
         OutputPort<std::string>(OUT_CAM,"current camera topic"),
         InputPort<std::vector<double>>(PICTASK_IN,"the det obj task metric"),
         InputPort<int>(TOT_OBS, "how many obstacles there are"),
-        InputPort<rebet::SystemAttributeValue>(IN_LIGHT,"lighting message wrapped in a systemattributevalue instance"),
+        InputPort<float>(IN_LIGHT,"float representing current darkness level"),
               };
       child_ports.merge(base_ports);
 
@@ -262,7 +261,7 @@ class AdaptPictureRateInternal: public AdaptOnConditionOnStart<int>
       double remaining_power_budget, num_objects_detected, objects_visited;
      
       auto pow_budget_res = getInput(POW_IN, remaining_power_budget);
-      auto curr_light_res = getInput(IN_LIGHT,_light_attribute);
+      auto curr_light_res = getInput(IN_LIGHT,current_darkness);
       std::vector<double> task_metrics;
       
       auto task_res = getInput(PICTASK_IN, task_metrics);
@@ -274,7 +273,6 @@ class AdaptPictureRateInternal: public AdaptOnConditionOnStart<int>
 
       if(curr_light_res)
       {
-        float current_darkness = _light_attribute.get<rebet::SystemAttributeType::ATTRIBUTE_FLOAT>().data;
         std::cout << "\n\n\nin eval condition darkness\n\n\n" << current_darkness << std::endl;
       }
       else
@@ -299,7 +297,6 @@ class AdaptPictureRateInternal: public AdaptOnConditionOnStart<int>
 
       if(task_res && pow_budget_res && curr_light_res)
       {
-        float current_darkness = _light_attribute.get<rebet::SystemAttributeType::ATTRIBUTE_FLOAT>().data;
         if(remaining_power_budget < 0.0)
         {
           return change_camera_feed(ALT_CAMERA_TOPIC);
@@ -351,7 +348,7 @@ class AdaptPictureRateInternal: public AdaptOnConditionOnStart<int>
       std::string ALT_CAMERA_TOPIC = "/corner_camera/image_raw";
       std::string OG_CAMERA_TOPIC = "/camera/image_noisy";
 
-      rebet::SystemAttributeValue _light_attribute;
+      float current_darkness;
       std::string detected = std::string(OBJECT_DETECTED_STRING);
       std::string current_image_feed;
       int _current_pic_rate = START_PIC_RATE;

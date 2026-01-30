@@ -1,0 +1,2 @@
+MoveQuickly, Performance efficiency: "Move as quickly as possible to 0.26 m/s", SHALL (AS CLOSE AS POSSIBLE TO (0.26, ^ current_velocity))
+MoveSafely, Safety: "Try to keep a velocity of below 0.18m/s while an object is within the first 10% of the range of the LIDAR.", SHALL (OR( NOT(^ too_close), AS CLOSE AS POSSIBLE TO (0.18, ^ current_velocity)))

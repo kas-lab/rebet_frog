@@ -19,7 +19,7 @@
 			</RetryUntilSuccessful>
 			
 			<filterObstacles map_to_filter="{current_map}" obstacle_positions="{route_poses}" obstacle_number="{num_obstacles}"/>
-			<!-- <FromExploreToIdentify subject_location="detect_object;get_frontier_service"> -->
+			<!-- <FromExploreToIdentify ros_node_name="detect_object;get_frontier_service"> -->
 			<Sleep msec="1000"/>
 			<!-- </FromExploreToIdentify> -->
 				<Repeat num_cycles="-1">

@@ -1,0 +1,9 @@
+name rebet_frog;
+import "rebetfrog.rossystem";
+import "partial_nav2.var";
+variability_model partial_nav2;
+ros_system rebet_frog;
+resolutions 
+LOW_SPEED : select: SetParameter(_slash_velocity_smoother,max_velocity,[0.10,0.0,1.0]) deselect:
+MED_SPEED : select: SetParameter(_slash_velocity_smoother,max_velocity,[0.18,0.0,1.0]) deselect:
+HI_SPEED : select: SetParameter(_slash_velocity_smoother,max_velocity,[0.26,0.0,1.0]) deselect:

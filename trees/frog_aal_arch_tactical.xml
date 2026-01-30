@@ -1,7 +1,7 @@
 
-<root BTCPP_format="4" main_tree_to_execute="FROG_AAL_INTERNAL">
+<root BTCPP_format="4" main_tree_to_execute="FROG_AAL_TACTICAL">
 	<include ros_pkg="rebet_frog" path="trees/frog_task_based.xml"/>
-  	<BehaviorTree ID="FROG_AAL_INTERNAL">
+  	<BehaviorTree ID="FROG_AAL_TACTICAL">
 	
 		<Sequence>
 			<Script code="task_weight:=1.0; obj_power_weight:=1.0; @obj_power_metric:=-10.0; move_pow_weight:=1.0; @move_pow_metric:=-10.0; move_eff_weight:=1.0; @move_eff_metric:=-10.0; safe_weight:=1.0; @safe_metric:=-10.0"/>
@@ -30,11 +30,11 @@
 						<SafetyQR weight="{safe_weight}" metric="{@safe_metric}" mean_metric="{safe_mean_metric}" in_laser_scan="{@laser_scan}">
 						<MovementPowerQR weight="{move_pow_weight}" metric="{@move_pow_metric}" mean_metric="{move_pow_mean_metric}" in_odom="{@odometry}"> 
 						<MovementEfficiencyQR weight="{move_eff_weight}" metric="{@move_eff_metric}" mean_metric="{move_eff_mean_metric}" in_odom="{@odometry}"> 
-							<AdaptMaxSpeedOff adaptation_period="3" parameter_name="max_velocity" ros_node_name="velocity_smoother" in_power="{@move_pow_metric}" in_safety="{@safe_metric}" in_movement="{@move_eff_metric}" report_speed="{@max_speed}" >
+							<AdaptOnConditionAny child_status="RUNNING" adaptation_type="Tactical" period="3s">	
 									<ForceSuccess>
 										<visitObs poses="{route_poses}" name_of_task="{@current_task}"  in_pose="{current_pose}" action_name="navigate_to_pose"/>
 									</ForceSuccess>
-							</AdaptMaxSpeedOff>
+							</AdaptOnConditionAny>
 						</MovementEfficiencyQR>
 						</MovementPowerQR> 
 						</SafetyQR>

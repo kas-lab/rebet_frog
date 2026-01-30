@@ -1,0 +1,12 @@
+feature_model {
+	name partial_nav2
+	root  
+		selected Feature VELOCITY_SMOOTHER {id VELOCITY_SMOOTHER children { mandatory selected Alternative MAX_SPEED { id MAX_SPEED children 
+			{ selected Feature LOW_SPEED { id LOW_SPEED }, 
+			  Feature MED_SPEED { id MED_SPEED },
+			  Feature HI_SPEED { id HI_SPEED }
+			}
+		}
+		}
+		}
+	crossTreeConstraints}
