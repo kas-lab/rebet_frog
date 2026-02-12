@@ -258,7 +258,7 @@ class AdaptPictureRateInternal: public AdaptOnConditionOnStart<int>
       setOutput(OUT_PIC, _current_pic_rate);
       setOutput(OUT_CAM, current_image_feed);
 
-      double remaining_power_budget, num_objects_detected, objects_visited;
+      double remaining_power_budget, num_objects_detected, pictures_taken;
      
       auto pow_budget_res = getInput(POW_IN, remaining_power_budget);
       auto curr_light_res = getInput(IN_LIGHT,current_darkness);
@@ -288,10 +288,10 @@ class AdaptPictureRateInternal: public AdaptOnConditionOnStart<int>
       if(task_res)
       {
         num_objects_detected = task_metrics[0];
-        objects_visited = task_metrics[1]; //this is now pictures taken..
+        pictures_taken = task_metrics[1]; //this is now pictures taken..
 
         std::cout << "\n\n\nobjects detected \n\n\n" << num_objects_detected << std::endl;
-        std::cout << "\n\n\nobjects visited \n\n\n" << objects_visited << std::endl;
+        std::cout << "\n\n\nobjects visited \n\n\n" << pictures_taken << std::endl;
 
       }
 
@@ -305,12 +305,13 @@ class AdaptPictureRateInternal: public AdaptOnConditionOnStart<int>
         {
           std::cout << "got this far darkness" << std::endl;
 
-            double total_pics_quota = (double)obs_num * 5; //5 is the repeat in the BT specified.
+            double total_pics_quota = (double)obs_num * 5; //5 is the repeat in the BT specified. This is the total number of pictures to be taken for the entire mission
 
-            double pics_left = total_pics_quota - objects_visited; //quota minus conusmed.
-            double extra_power_consumed = PIC_INCREMENT * DETECTION_AVG_POW;
-
+            double pics_left = total_pics_quota - pictures_taken; //quota minus conusmed.
             double power_needed_after = (double)pics_left * DETECTION_AVG_POW; //Power still necessary to take 5 picture of each obj
+
+            double extra_power_consumed = PIC_INCREMENT * DETECTION_AVG_POW; // How much power would be consumed if we increase the picture rate.
+
 
             double power_to_be_used = power_needed_after + extra_power_consumed;
 

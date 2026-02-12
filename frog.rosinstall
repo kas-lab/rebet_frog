@@ -34,7 +34,7 @@ repositories:
   typedb_tactics:
     type: git
     url: git@github.com:kas-lab/typedb_tactics.git
-    version: elvin_mess
+    version: dev
   ros_monitors:
     type: git
     url: git@github.com:kas-lab/ros_monitors.git

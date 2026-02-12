@@ -43,7 +43,7 @@ class ObjectDetectionEfficiencyQR : public TaskLevelQR
 
       _last_timestamp = builtin_interfaces::msg::Time();
 
-      objects_visited = 0.0;
+      pictures_taken = 0.0;
       goal_detected = 0;
     }
 
@@ -70,7 +70,7 @@ class ObjectDetectionEfficiencyQR : public TaskLevelQR
 
         std::cout << "succ measure in obj eff" << std::endl;
 
-        std::vector<double> both_metrics = {(float)goal_detected, objects_visited};
+        std::vector<double> both_metrics = {(float)goal_detected, pictures_taken};
 
         setOutput(METRIC,both_metrics);
         _times_calculated++; 
@@ -114,7 +114,7 @@ class ObjectDetectionEfficiencyQR : public TaskLevelQR
             // num_obj_det_curr_exec+=obj_msg.object_names.size();
 
           }
-          objects_visited+=1.0;
+          pictures_taken+=(double)objects_msg_vec.size();
           _last_timestamp = objects_msg_vec[0].stamp;
 
           return true;
@@ -167,7 +167,7 @@ class ObjectDetectionEfficiencyQR : public TaskLevelQR
       int goal_detected;
       builtin_interfaces::msg::Time _last_timestamp;
       const double MAX_DETECTABLE = 7.0; //Corresponds to the max picture rate assuming one object is detected per picture on average..
-      double objects_visited;
+      double pictures_taken;
       int _counter;
       static constexpr const char* IN_OBJ = "objs_identified";
       static constexpr const char* PIC_RATE = "current_pic_rate";
