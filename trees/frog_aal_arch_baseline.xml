@@ -26,15 +26,15 @@
 
 				<Repeat num_cycles="{num_obstacles}">
 					<Parallel>
-						<SafetyQR weight="{safe_weight}" metric="{@safe_metric}" mean_metric="{safe_mean_metric}" in_laser_scan="{@laser_scan}">
+						<MoveSafely weight="{safe_weight}" metric="{@safe_metric}" mean_metric="{safe_mean_metric}" in_laser_scan="{@laser_scan}">
 						<MovementPowerQR weight="{move_pow_weight}" metric="{move_pow_metric}" mean_metric="{move_pow_mean_metric}" in_odom="{@odometry}"> 
-						<MovementEfficiencyQR weight="{move_eff_weight}" metric="{@move_eff_metric}" mean_metric="{move_eff_mean_metric}" in_odom="{@odometry}"> 
+						<MoveQuickly weight="{move_eff_weight}" metric="{@move_eff_metric}" mean_metric="{move_eff_mean_metric}" in_odom="{@odometry}"> 
                                 <ForceSuccess>
                                     <visitObs poses="{route_poses}" name_of_task="{@current_task}"  in_pose="{current_pose}" action_name="navigate_to_pose"/>
                                 </ForceSuccess>
-						</MovementEfficiencyQR>
+						</MoveQuickly>
 						</MovementPowerQR> 
-						</SafetyQR>
+						</MoveSafely>
 						<Repeat num_cycles="5">
 							<DetectObjectsSavePower weight="{obj_power_weight}" obstacles_total="{num_obstacles}" metric="{@obj_power_metric}" objs_identified="{objects_detected}" mean_metric="{obj_pow_mean_metric}">
 							<DetectObjectsEfficiently weight="{task_weight}" objs_identified="{objects_detected}" metric="{@task_metric}" mean_metric="{task_mean_metric}" out_status="{obj_task_state}" >

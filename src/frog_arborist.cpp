@@ -11,7 +11,7 @@
 #include "behaviortree_cpp/json_export.h"
 #include "nav_msgs/msg/odometry.hpp"
 #include "behaviortree_cpp/contrib/json.hpp"
-
+#include "adapt_x_msgs/srv/update_in_effect.hpp"
 
 
 
@@ -24,6 +24,9 @@ public:
   int total_elapsed = 0;
   int time_limit = 300;
   bool _publish_feedback = false;
+  std::vector<std::string> qrs_in_effect = {"None"};
+  rclcpp::Client<adapt_x_msgs::srv::UpdateInEffect>::SharedPtr client =
+    node()->create_client<adapt_x_msgs::srv::UpdateInEffect>("/tactical_retreat_kb_node/update_in_effect");
 
   FrogArborist(const rclcpp::NodeOptions& options) : Arborist(options) { }
 
@@ -37,11 +40,11 @@ public:
     factory.registerNodeType<ObjectDetectionEfficiencyQR>("DetectObjectsEfficiently");
     factory.registerNodeType<SimpleSystemPowerQR>("KeepBatteryMin");
     factory.registerNodeType<SystemPowerQR>("PowerQR");
-    factory.registerNodeType<SafetyQR>("SafetyQR");
+    factory.registerNodeType<SafetyQR>("MoveSafely");
     factory.registerNodeType<ObjectDetectionPowerQR>("DetectObjectsSavePower");
 
 
-    factory.registerNodeType<MovementEfficiencyQR>("MovementEfficiencyQR");
+    factory.registerNodeType<MovementEfficiencyQR>("MoveQuickly");
     factory.registerNodeType<MovementPowerQR>("MovementPowerQR");
 
 
@@ -91,7 +94,40 @@ public:
     {
       return BT::NodeStatus::SUCCESS;
     }
+
+    std::vector<QRNode *> tsk_qr_nodes = {};
+    tsk_qr_nodes = get_tree_qrs<QRNode>();
     
+    std::vector<std::string> current_qrs_in_effect = {};
+    for (auto & nnode : tsk_qr_nodes) {
+      if (nnode->status() == NodeStatus::RUNNING) {
+
+        if(nnode->name().find("MoveQuickly") != std::string::npos || nnode->name().find("MoveSafely") != std::string::npos)
+        {
+          current_qrs_in_effect.push_back(nnode->name());
+        }
+
+      }
+    }
+
+    // Only send request if the list has changed
+    if (current_qrs_in_effect.size() > 0 && current_qrs_in_effect != qrs_in_effect) {
+
+      qrs_in_effect = current_qrs_in_effect;
+      
+      auto request = std::make_shared<adapt_x_msgs::srv::UpdateInEffect::Request>();
+      request->all_requirements = true;
+      request->requirement_names = qrs_in_effect;
+
+      using ServiceResponseFuture =
+      rclcpp::Client<adapt_x_msgs::srv::UpdateInEffect>::SharedFuture;
+      auto response_received_callback = [this](ServiceResponseFuture future) {
+        auto result = future.get();
+        RCLCPP_INFO(node()->get_logger(), "Finished update_in_effect");
+      };
+
+      auto result = client->async_send_request(request, response_received_callback);
+    }
     return std::nullopt;
   }
 

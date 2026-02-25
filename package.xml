@@ -26,6 +26,8 @@
   <depend>rebet</depend>
   <depend>navigation2</depend>
   <depend>nav2_bringup</depend>
+  <depend>adapt_x_msgs</depend>
+
 
 
 
