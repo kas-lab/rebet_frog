@@ -7,7 +7,6 @@ guard {
  	features(selected(rebet_frog.HI_SPEED)) 
  	}
 action { select_variant(rebet_frog.MED_SPEED)}
-effect {}
 };
 rule DECREASE_TO_LOW {
 guard {
@@ -15,7 +14,6 @@ guard {
  	features(selected(rebet_frog.MED_SPEED)) 
  	}
 action { select_variant(rebet_frog.LOW_SPEED)}
-effect {}
 };
 rule INCREASE_TO_MED {
 guard {
@@ -23,7 +21,6 @@ guard {
  	features(selected(rebet_frog.LOW_SPEED)) 
  	}
 action { select_variant(rebet_frog.MED_SPEED)}
-effect {}
 };
 rule INCREASE_TO_MAX {
 guard {
@@ -31,5 +28,4 @@ guard {
  	features(selected(rebet_frog.MED_SPEED)) 
  	}
 action { select_variant(rebet_frog.HI_SPEED)}
-effect {}
 };
