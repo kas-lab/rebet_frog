@@ -1,5 +1,6 @@
 /adaptation_engine:
   ros__parameters:
+    use_sim_time: true
     tactics_path: "<rebet_frog_xtext_dir>/frog.tactics"
     resolution_path: "<rebet_frog_xtext_dir>/rebetfrog.resolution"
     ros_path:

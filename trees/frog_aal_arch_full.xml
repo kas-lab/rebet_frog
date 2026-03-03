@@ -26,17 +26,17 @@
 			<DetectObjectsEfficiently weight="{task_weight}" objs_identified="{objects_detected}" metric="{task_metric}" mean_metric="{task_mean_metric}" out_status="{obj_task_state}" >
 				<Repeat num_cycles="{num_obstacles}">
 					<Sequence>
-					<SafetyQR weight="{safe_weight}" metric="{safe_metric}" mean_metric="{safe_mean_metric}" in_laser_scan="{laser_scan}">
+					<MoveSafely weight="{safe_weight}" metric="{safe_metric}" mean_metric="{safe_mean_metric}" in_laser_scan="{laser_scan}">
 					<MovementPowerQR weight="{move_pow_weight}" metric="{move_pow_metric}" mean_metric="{move_pow_mean_metric}" in_odom="{odometry}"> 
-					<MovementEfficiencyQR weight="{move_eff_weight}" metric="{move_eff_metric}" mean_metric="{move_eff_mean_metric}" in_odom="{odometry}"> 
+					<MoveQuickly weight="{move_eff_weight}" metric="{move_eff_metric}" mean_metric="{move_eff_mean_metric}" in_odom="{odometry}"> 
 						<AdaptMaxSpeedOff adaptation_period="3" parameter_name="max_velocity" ros_node_name="velocity_smoother" in_power="{move_pow_metric}" in_safety="{safe_metric}" in_movement="{move_eff_metric}" report_speed="{max_speed}" >
 								<ForceSuccess>
 									<visitObs poses="{route_poses}" name_of_task="{current_task}"  in_pose="{current_pose}"/>
 								</ForceSuccess>
 						</AdaptMaxSpeedOff>
-					</MovementEfficiencyQR>
+					</MoveQuickly>
 					</MovementPowerQR> 
-					</SafetyQR>
+					</MoveSafely>
 					
 					<RetryUntilSuccessful num_attempts="-1">
 						<slowlySpin topic_name="/cmd_vel" />
@@ -68,17 +68,17 @@
 									<AdaptPictureRateOff parameter_name="pic_rate" in_power="{obj_power_metric}" in_pictask="{task_metric}" obstacles_total="{num_obstacles}" lighting_in="{current_lighting}">
 									<Sequence>
 						
-										<SafetyQR weight="{safe_weight}" metric="{safe_metric}" mean_metric="{safe_mean_metric}" in_laser_scan="{laser_scan}">
+										<MoveSafely weight="{safe_weight}" metric="{safe_metric}" mean_metric="{safe_mean_metric}" in_laser_scan="{laser_scan}">
 										<MovementPowerQR weight="{move_pow_weight}" metric="{move_pow_metric}" mean_metric="{move_pow_mean_metric}" in_odom="{odometry}"> 
-										<MovementEfficiencyQR weight="{move_eff_weight}" metric="{move_eff_metric}" mean_metric="{move_eff_mean_metric}" in_odom="{odometry}"> 
+										<MoveQuickly weight="{move_eff_weight}" metric="{move_eff_metric}" mean_metric="{move_eff_mean_metric}" in_odom="{odometry}"> 
 											<AdaptMaxSpeedOff adaptation_period="3" parameter_name="max_velocity" ros_node_name="velocity_smoother" in_power="{move_pow_metric}" in_safety="{safe_metric}" in_movement="{move_eff_metric}" >
 												<ForceSuccess>
 													<visitObs poses="{route_poses}" name_of_task="{current_task}"/>
 												</ForceSuccess>
 											</AdaptMaxSpeedOff>
-										</MovementEfficiencyQR>
+										</MoveQuickly>
 										</MovementPowerQR> 
-										</SafetyQR>
+										</MoveSafely>
 
 										<NewIDObj pictures_taken="{rep_pic_take}" number_detected="{rep_num_ob}" service_name="/detect_object_srv" objs_identified="{objects_detected}" name_of_task="{current_task}"/>
 

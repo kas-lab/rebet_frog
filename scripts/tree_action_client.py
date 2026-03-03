@@ -6,7 +6,7 @@ import sys
 from btcpp_ros2_interfaces.action import ExecuteTree
 import pandas as pd
 import json
-import time
+from datetime import datetime
 
 got_response = False
 
@@ -23,7 +23,7 @@ class TreeActionClient(Node):
     def send_goal(self, tree_name):
         if(self.get_parameter("autostart").value or not input("Press enter to start")):
             goal_msg = ExecuteTree.Goal()
-
+            self.tree = tree_name
             goal_msg.target_tree = tree_name
         
             self._action_client.wait_for_server()
@@ -56,7 +56,7 @@ class TreeActionClient(Node):
         else:
             self.get_logger().info('Result: Done ticking BT, ended on Failure')
 
-        self.results.to_csv(str(int(time.time())) + '_results.csv')
+        self.results.to_csv(datetime.now().isoformat(timespec='minutes') + '_' + self.tree + '_results.csv')
 
         got_response = True
 

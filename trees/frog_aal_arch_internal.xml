@@ -4,7 +4,7 @@
   	<BehaviorTree ID="FROG_AAL_INTERNAL">
 	
 		<Sequence>
-			<Script code="task_weight:=1.0; obj_power_weight:=1.0; @obj_power_metric:=-10.0; move_pow_weight:=1.0; @move_pow_metric:=-10.0; move_eff_weight:=1.0; @move_eff_metric:=-10.0; safe_weight:=1.0; @safe_metric:=-10.0"/>
+			<Script code="task_weight:=1.0; obj_power_weight:=1.0; @obj_power:=-10.0; move_pow_weight:=1.0; @move_pow_metric:=-10.0; move_eff_weight:=1.0; @movement_efficiency:=-10.0; safe_weight:=1.0; @safety_metric:=-10.0"/>
 		
 			<!-- <SubTree ID="SLAMandCharge"/> -->
 			<Sleep msec="3000"/> 
@@ -27,21 +27,21 @@
 
 				<Repeat num_cycles="{num_obstacles}">
 					<Parallel>
-						<SafetyQR weight="{safe_weight}" metric="{@safe_metric}" mean_metric="{safe_mean_metric}" in_laser_scan="{@laser_scan}">
+						<MoveSafely weight="{safe_weight}" metric="{@safety_metric}" mean_metric="{safe_mean_metric}" in_laser_scan="{@laser_scan}">
 						<MovementPowerQR weight="{move_pow_weight}" metric="{@move_pow_metric}" mean_metric="{move_pow_mean_metric}" in_odom="{@odometry}"> 
-						<MovementEfficiencyQR weight="{move_eff_weight}" metric="{@move_eff_metric}" mean_metric="{move_eff_mean_metric}" in_odom="{@odometry}"> 
-							<AdaptMaxSpeedOff adaptation_period="3" parameter_name="max_velocity" ros_node_name="velocity_smoother" in_power="{@move_pow_metric}" in_safety="{@safe_metric}" in_movement="{@move_eff_metric}" report_speed="{@max_speed}" >
+						<MoveQuickly weight="{move_eff_weight}" metric="{@movement_efficiency}" mean_metric="{move_eff_mean_metric}" in_odom="{@odometry}"> 
+							<AdaptMaxSpeedOff adaptation_period="3" parameter_name="max_velocity" ros_node_name="velocity_smoother" in_power="{@move_pow_metric}" in_safety="{@safety_metric}" in_movement="{@movement_efficiency}" report_speed="{@max_speed}" >
 									<ForceSuccess>
 										<visitObs poses="{route_poses}" name_of_task="{@current_task}"  in_pose="{current_pose}" action_name="navigate_to_pose"/>
 									</ForceSuccess>
 							</AdaptMaxSpeedOff>
-						</MovementEfficiencyQR>
+						</MoveQuickly>
 						</MovementPowerQR> 
-						</SafetyQR>
+						</MoveSafely>
 						<Repeat num_cycles="5">
-							<DetectObjectsSavePower weight="{obj_power_weight}" obstacles_total="{num_obstacles}" metric="{@obj_power_metric}" objs_identified="{objects_detected}" mean_metric="{obj_pow_mean_metric}">
-							<DetectObjectsEfficiently weight="{task_weight}" objs_identified="{objects_detected}" metric="{@task_metric}" mean_metric="{task_mean_metric}" out_status="{obj_task_state}" >
-								<AdaptPictureRateOff ros_node_name="detect_object" parameter_name="num_predictions;image_topic_name" in_power="{@obj_power_metric}" in_pictask="{@task_metric}" obstacles_total="{num_obstacles}" lighting_in="{@current_lighting}" out_pic_rate="{@pic_rate}" out_cam_top="{@cam_feed}">
+							<DetectObjectsSavePower weight="{obj_power_weight}" obstacles_total="{num_obstacles}" metric="{@obj_power}" objs_identified="{objects_detected}" mean_metric="{obj_pow_mean_metric}">
+							<DetectObjectsEfficiently weight="{task_weight}" objs_identified="{objects_detected}" metric="{@obj_det_eff}" mean_metric="{task_mean_metric}" out_status="{obj_task_state}" >
+								<AdaptPictureRateOff ros_node_name="detect_object" parameter_name="num_predictions;image_topic_name" in_power="{@obj_power}" in_pictask="{@obj_det_eff}" obstacles_total="{num_obstacles}" lighting_in="{@current_lighting}" out_pic_rate="{@pic_rate}" out_cam_top="{@curr_cam_topic}">
 									<NewIDObj pictures_taken="{@rep_pic_take}" number_detected="{rep_num_ob}" service_name="/detect_object_srv" objs_identified="{objects_detected}" name_of_task="{@current_task}"/>
 									<!-- <Sleep msec="1000"/> -->
 								</AdaptPictureRateOff>
